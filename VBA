@@ -34,6 +34,7 @@ Application.OnTime DownTime, "ShutDown"
 End Sub
 Sub ShutDown()
 ThisWorkbook.Close True
+'ActiveWorkbook.Close SaveChanges:=True
 End Sub
 Sub Disable()
 On Error Resume Next
