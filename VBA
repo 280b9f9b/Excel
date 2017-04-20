@@ -1,0 +1,46 @@
+
+......................
+'auto close worksheet
+ThisWorkbook 
+Private Sub Workbook_Open()
+If Not ThisWorkbook.ReadOnly Then
+MsgBox "This workbook will auto-close after 20 seconds of inactivity "
+Call SetTime
+End If
+End Sub
+Private Sub Workbook_BeforeClose(Cancel As Boolean)
+If Not ThisWorkbook.ReadOnly Then
+Call Disable
+End If
+End Sub
+Private Sub Workbook_SheetCalculate(ByVal Sh As Object)
+If Not ThisWorkbook.ReadOnly Then
+Call Disable
+Call SetTime
+End If
+End Sub
+Private Sub Workbook_SheetSelectionChange(ByVal Sh As Object, ByVal Target As Excel.Range)
+If Not ThisWorkbook.ReadOnly Then
+Call Disable
+Call SetTime
+End If
+End Sub
+
+module
+Dim DownTime As Date
+Sub SetTime()
+DownTime = Now + TimeValue("00:00:20")
+Application.OnTime DownTime, "ShutDown"
+End Sub
+Sub ShutDown()
+ThisWorkbook.Close True
+End Sub
+Sub Disable()
+On Error Resume Next
+Application.OnTime EarliestTime:=DownTime, Procedure:="ShutDown", Schedule:=False
+End Sub
+....................
+
+
+
+
