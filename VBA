@@ -42,6 +42,9 @@ Application.OnTime EarliestTime:=DownTime, Procedure:="ShutDown", Schedule:=Fals
 End Sub
 ....................
 
+' days remaining
+=IF(isnumber(A1),A1-today()&" Days","")
+................
 
 
 
